@@ -1,0 +1,134 @@
+﻿@model Models.Models.Usuario
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@{
+    // Layout = "_Layout";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Nectia.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Nectia.Web.styles.css" asp-append-version="true" />
+
+   
+@*     <script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")" type="text/javascript"></script> *@
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+ 
+    <style>
+        .myForm {
+            width: 150%;
+        }
+
+        .error {
+            color: #F00;
+            background-color: #FFF;
+        }
+    </style>
+</head>
+<body lass="text-center">
+    <form asp-action="Login" method="post" class="myForm" role="form" id="basic-form">
+
+
+
+        <div class="container align-content-center">
+            <h2 class="container width: 50%;">Ingreso</h2>
+            <div class="col-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="card shadow rounded-1">
+                    <div class="card-body  bg-light align-content-center">
+
+                        <div class="form-group">
+                            <label asp-for="User" class="col-md-2 control-label">  </label>
+                            <div class="col-md-6">
+                                <input asp-for="User" name="User" class="form-control" data-required="true" />
+                              
+                                @* <span asp-validation-for="User" class="text-danger"></span> *@
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="col-md-2 control-label"> </label>
+                            <div class="col-md-6">
+                                <input asp-for="Password" name="Password" class="form-control" data-required="true" />
+                               
+                                @* <span asp-validation-for="Password" class="text-danger"></span> *@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                          
+                            <input type="submit" value="Login" class="btn btn-primary" />
+
+                            @* <button type="submit" value="Login" class="btn btn-primary">Login</button> *@
+                            @if (ViewBag.Error != null)
+                            {
+                                <p style="color:red">@ViewBag.Error</p>
+                            }
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+        <script>
+            $(document).ready(function () {
+                $("#basic-form").validate({
+                    rules: {
+                        User: {
+                            required: true
+                           
+                        },
+                        Password: {
+                            required: true
+                           
+                           
+                        }
+                      
+                    },
+                    messages: {
+                        User: {
+                            required: "User Requerido"
+                        },
+                        Password: {
+                            required: "Password Requerido"
+                        }
+                     
+                    }
+                });
+            });
+        </script>
+        <script>
+            //Script que impide el uso del botón atrás del navegador
+            window.location.hash = "no-back-button";
+            window.location.hash = "Again-No-back-button";
+            window.onhashchange = function () { window.location.hash = ""; }
+
+        </script>
+    </form>
+</body>
+
+</html>
+
