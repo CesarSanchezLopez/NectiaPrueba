@@ -16,10 +16,15 @@ namespace Nectia.Web.Controllers
     {
         HttpClient client;
         //The URL of the WEB API Service
-        string url = "https://localhost:7089/";
-
-        public VehiculosController()
+        //string url = "https://localhost:7089/";
+        string url { get; }
+        public IConfiguration Configuration { get; }
+        public VehiculosController(IConfiguration configuration)
         {
+            Configuration = configuration;
+          
+            url = Configuration.GetValue<string>("URLApi:URLApiKey");
+
             client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();

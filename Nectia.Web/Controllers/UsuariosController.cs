@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -16,14 +17,20 @@ namespace Nectia.Web.Controllers
     {
         HttpClient client;
         //The URL of the WEB API Service
-        string url = "https://localhost:7089/";
-
-        public UsuariosController()
+       // string url = "https://localhost:7089/";
+        string url { get; }
+        public IConfiguration Configuration { get; }
+        public UsuariosController(IConfiguration configuration)
         {
+            Configuration = configuration;
+           
+            url = Configuration.GetValue<string>("URLApi:URLApiKey");
             client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+           
         }
 
         // GET: Usuarios
